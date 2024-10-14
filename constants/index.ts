@@ -18,13 +18,13 @@ export const sidebarLinks = [
 
   {
     label: "Recordings",
-    route: "/recording",
+    route: "/recordings",
     imgUrl: "/icons/Video.svg",
   },
 
   {
     label: "Personal Room",
-    route: "/personal",
+    route: "/personal-room",
     imgUrl: "/icons/add-personal.svg",
   },
 ];
