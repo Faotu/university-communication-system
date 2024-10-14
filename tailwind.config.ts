@@ -11,10 +11,13 @@ const config: Config = {
     extend: {
       colors: {
         dark: {
-          // 1: "#C1F12E",
-          // 1: "#959595",
-          1: "#0C090A",
+          1: "#C1F2E",
           2: "#161925",
+        },
+
+        blue: {
+          1: "#0E78F9",
+          2: "#E76F9",
         },
 
         background: "hsl(var(--background))",
