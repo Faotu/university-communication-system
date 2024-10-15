@@ -8,7 +8,7 @@ const ClassTypeList = () => {
         className="bg-orange-1 px-4 py-6 flex flex-col justify-between w-full xl:md-w[270px] min-h-[260px] rounded-[14px] cursor-pointer"
         onClick={() => {}}
       >
-        Box 1
+        <div></div>
       </div>
     </section>
   );
