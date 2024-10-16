@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import HomeCard from "./HomeCard";
 import { useRouter } from "next/navigation";
+import ClassModal from "./ClassModal";
 
 const ClassTypeList = () => {
   const router = useRouter();
@@ -9,6 +10,7 @@ const ClassTypeList = () => {
     "isScheduleMeeting" | "isJoiningMeeting" | "isInstantMeeting" | undefined
   >(undefined);
 
+  const createMeeting = () => {};
   return (
     <section className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
       <HomeCard
@@ -35,9 +37,18 @@ const ClassTypeList = () => {
       <HomeCard
         img="/icons/recordings.svg"
         title="View Recordings"
-        descriptipon="Meeting Recordings"
+        descriptipon="Class Recordings"
         className="bg-yellow-1"
         handleClick={() => router.push("/recordings")}
+      />
+
+      <ClassModal
+        isOpen={meetingState === "isScheduleMeeting"}
+        onClose={() => setMeetingState(undefined)}
+        title="Create an Instant Class"
+        className="text-center"
+        buttonText="Start Class"
+        handleClick={createMeeting}
       />
     </section>
   );
