@@ -6,6 +6,7 @@ import ClassModal from "./ClassModal";
 import { useUser } from "@clerk/nextjs";
 import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
 import { useToast } from "@/hooks/use-toast";
+import { Textarea } from "./ui/textarea";
 
 const ClassTypeList = () => {
   const { toast } = useToast();
@@ -93,32 +94,47 @@ const ClassTypeList = () => {
         className="bg-yellow-1"
         handleClick={() => router.push("/recordings")}
       />
-      <ClassModal
-        isOpen={meetingState === "isScheduleMeeting"}
-        onClose={() => setMeetingState(undefined)}
-        title="Create a Class"
-        className="text-center"
-        buttonText="Start Class"
-        handleClick={createMeeting}
-      />
-      <ClassModal
-        isOpen={meetingState === "isJoiningMeeting"}
-        onClose={() => setMeetingState(undefined)}
-        title="Type the link here"
-        className="text-center"
-        buttonText="Join Class"
-        handleClick={createMeeting}
-      />{" "}
+      {!callDetails ? (
+        <ClassModal
+          isOpen={meetingState === "isScheduleMeeting"}
+          onClose={() => setMeetingState(undefined)}
+          title="Create Class"
+          handleClick={createMeeting}
+        >
+          <div className="flex flex-col gap-2.5 ">
+            <label className="text-base text-normal leading-[22px] text-sky-3">
+              Add Class Name or Course Code
+            </label>
+            <Textarea
+              className="border-none bg-dark-3 focus-visible:ring-0 focus-visible:ring-offset-0"
+              onChange={(e) => {
+                setValaues({ ...values, description: e.target.value });
+              }}
+            />
+          </div>
+          <div className="flex w-full flex-col gap-2.5">
+            <label className="text-base text-normal leading-[22px]">
+              Select Date and Time
+            </label>
+          </div>
+        </ClassModal>
+      ) : (
+        <ClassModal
+          isOpen={meetingState === "isScheduleMeeting"}
+          onClose={() => setMeetingState(undefined)}
+          title="Class Created"
+          className="text-center"
+          handleClick={() => {
+            // navigator.clipboard.writeText(meetingLink)
+            // toast({title: 'Link copied'})
+          }}
+          image="/icons/checked.svg"
+          buttonIcon="/icons/copy.svg"
+          buttonText="Copy class link"
+        />
+      )}
       <ClassModal
         isOpen={meetingState === "isInstantMeeting"}
-        onClose={() => setMeetingState(undefined)}
-        title="Create an Instant Class"
-        className="text-center"
-        buttonText="Start Class"
-        handleClick={createMeeting}
-      />{" "}
-      <ClassModal
-        isOpen={meetingState === "isScheduleMeeting"}
         onClose={() => setMeetingState(undefined)}
         title="Create an Instant Class"
         className="text-center"
