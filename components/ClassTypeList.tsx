@@ -7,6 +7,7 @@ import { useUser } from "@clerk/nextjs";
 import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
 import { useToast } from "@/hooks/use-toast";
 import { Textarea } from "./ui/textarea";
+import DatePicker from "react-datepicker";
 
 const ClassTypeList = () => {
   const { toast } = useToast();
@@ -17,7 +18,7 @@ const ClassTypeList = () => {
 
   const { user } = useUser();
   const client = useStreamVideoClient();
-  const [values, setValaues] = useState({
+  const [values, setValues] = useState({
     dateTime: new Date(),
     description: "",
     link: "",
@@ -64,6 +65,7 @@ const ClassTypeList = () => {
       });
     }
   };
+  const meetingLink = `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${callDetails?.id}`;
   return (
     <section className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
       <HomeCard
@@ -108,7 +110,7 @@ const ClassTypeList = () => {
             <Textarea
               className="border-none bg-dark-3 focus-visible:ring-0 focus-visible:ring-offset-0"
               onChange={(e) => {
-                setValaues({ ...values, description: e.target.value });
+                setValues({ ...values, description: e.target.value });
               }}
             />
           </div>
@@ -116,6 +118,16 @@ const ClassTypeList = () => {
             <label className="text-base text-normal leading-[22px]">
               Select Date and Time
             </label>
+            <DatePicker
+              selected={values.dateTime}
+              onChange={(date) => setValues({ ...values, dateTime: date! })}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={15}
+              timeCaption="time"
+              dateFormat="MMMM d, yyyy h:m aa"
+              className="w-full bg-dark-3 p-2 focus:outline-none"
+            />
           </div>
         </ClassModal>
       ) : (
@@ -125,8 +137,8 @@ const ClassTypeList = () => {
           title="Class Created"
           className="text-center"
           handleClick={() => {
-            // navigator.clipboard.writeText(meetingLink)
-            // toast({title: 'Link copied'})
+            navigator.clipboard.writeText(meetingLink);
+            toast({ title: "Link copied" });
           }}
           image="/icons/checked.svg"
           buttonIcon="/icons/copy.svg"
